@@ -11,7 +11,7 @@
         if (typeof (settings.url) == "undefined") {
             throw "Invalid $.webApi call, missing value for parameter: url.";
         }
-        
+
         var data = (settings.type == 'POST') ?
             JSON.stringify(settings.params):
             settings.params;
@@ -23,7 +23,7 @@
                     try {
                         $.mobile.showPageLoadingMsg();
                     } catch (e) {
-                    }                    
+                    }
                 }
                 else if (typeof (settings.loadingMessageSelector) != "undefined") {
                     $(settings.loadingMessageSelector).show();
@@ -47,7 +47,7 @@
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (msg) {
-                if (typeof (settings.success) != "undefined") settings.success(msg);
+                if (typeof (settings.success) != "undefined") settings.success.call(settings.context || this, msg);
             },
             error: function (e) {
                 var message = e.status + " - " + e.statusText;
@@ -60,7 +60,7 @@
                         }
                         else {
                             message += '. ' + errorDetails;
-                        }                        
+                        }
                     }
                     catch (innerError) {
                         if (e.responseText.indexOf("<pre>") > 0) {
@@ -70,10 +70,10 @@
                         } else if (e.responseText.indexOf("\"Message\":\"") > 0) {
                             message = e.responseText.substring(e.responseText.indexOf("\"Message\":\"") + "\"Message\":\"".length, e.responseText.indexOf("\",\"Stack"));
                             message = message.replace(/\\u0027/g, "");
-                        }                        
+                        }
                     }
                 }
-                if (typeof (settings.error) != "undefined") settings.error(message);
+                if (typeof (settings.error) != "undefined") settings.error.call(settings.context || this, message);
                 else if (typeof (settings.errorMessageSelector) != "undefined") $(settings.errorMessageSelector).text(message);
                 else if (settings.showAlertOnError) alert(message);
             },

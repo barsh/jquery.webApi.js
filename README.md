@@ -17,6 +17,8 @@ A string containing the URL to which the request is sent (for example: /api/math
 Data to be sent to the server as GET or POST parameters. 
 Must be a JSON Object made up of Key/Value pairs.
 
+###context (optional)
+The object `this` should refer to in success and error callbacks. Defaults to an object representing the AJAX options.
 
 ###success (optional)
 A function to be called if the request succeeds.  
