@@ -6,6 +6,7 @@ jquery.webApi.js
 - Improved paramater handling for GET and POST operations
 - Automatically shows jQueryMobile loading message
 - Prevents browser from caching responses
+- Returns a "then-able" promise for use with [jQuery deferred API](http://api.jquery.com/category/deferred-object/)
 
 ## $.webApi(settings);
 settings - A set of key/value pairs that configure the request. All settings are option except methodName.

@@ -11,19 +11,19 @@
         if (typeof (settings.url) == "undefined") {
             throw "Invalid $.webApi call, missing value for parameter: url.";
         }
-        
+
         var data = (settings.type == 'POST') ?
             JSON.stringify(settings.params):
             settings.params;
 
-        $.ajax({
+        return $.ajax({
             beforeSend: function () {
                 if (settings.showLoadingMessage == false) return;
                 if (typeof ($.mobile) != "undefined") {
                     try {
                         $.mobile.showPageLoadingMsg();
                     } catch (e) {
-                    }                    
+                    }
                 }
                 else if (typeof (settings.loadingMessageSelector) != "undefined") {
                     $(settings.loadingMessageSelector).show();
@@ -60,7 +60,7 @@
                         }
                         else {
                             message += '. ' + errorDetails;
-                        }                        
+                        }
                     }
                     catch (innerError) {
                         if (e.responseText.indexOf("<pre>") > 0) {
@@ -70,7 +70,7 @@
                         } else if (e.responseText.indexOf("\"Message\":\"") > 0) {
                             message = e.responseText.substring(e.responseText.indexOf("\"Message\":\"") + "\"Message\":\"".length, e.responseText.indexOf("\",\"Stack"));
                             message = message.replace(/\\u0027/g, "");
-                        }                        
+                        }
                     }
                 }
                 if (typeof (settings.error) != "undefined") settings.error(message);
@@ -78,8 +78,6 @@
                 else if (settings.showAlertOnError) alert(message);
             },
         });
-
-        return false;
 
         function applyDefaultsToSettings() {
             if (typeof (settings.showAlertOnError) == "undefined") settings.showAlertOnError = true;
